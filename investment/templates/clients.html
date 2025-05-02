@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Клиенты</h2>
+    <a href="{% url 'add_client' %}" class="btn btn-primary mb-3">Добавить клиента</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Вид собственности</th>
+                <th>Адрес</th>
+                <th>Телефон</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in clients %}
+            <tr>
+                <td>{{ client.name }}</td>
+                <td>{{ client.ownership_type }}</td>
+                <td>{{ client.address }}</td>
+                <td>{{ client.phone }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

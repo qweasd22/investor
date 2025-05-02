@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3>{{ security.code }} - {{ security.name }}</h3>
+                <div>
+                    <a href="{% url 'security_update' security.pk %}" 
+                       class="btn btn-light btn-sm">
+                       <i class="bi bi-pencil"></i> Редактировать
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Тип:</dt>
+                        <dd class="col-sm-8">{{ security.get_security_type_display }}</dd>
+                        
+                        <dt class="col-sm-4">Эмитент:</dt>
+                        <dd class="col-sm-8">{{ security.issuer }}</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-4">Рейтинг:</dt>
+                        <dd class="col-sm-8">{{ security.rating }}/10</dd>
+                        
+                        <dt class="col-sm-4">Минимальная сумма:</dt>
+                        <dd class="col-sm-8">{{ security.min_amount }} {{ security.currency }}</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <h4 class="mt-4 border-top pt-3">История котировок</h4>
+            <a href="{% url 'quote_create' security.pk %}" 
+               class="btn btn-success mb-3">
+               <i class="bi bi-plus-lg"></i> Новая котировка
+            </a>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Котировка</th>
+                            <th>Изменение</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for quote in quotes %}
+                        <tr>
+                            <td>{{ quote.date|date:"d.m.Y" }}</td>
+                            <td>{{ quote.quote }}</td>
+                            <td>
+                                {% if not forloop.first %}
+                                    {{ quote.get_change_percentage }}%
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

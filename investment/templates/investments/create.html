@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3>Новая инвестиция</h3>
+        </div>
+        <div class="card-body">
+            {% if form.errors %}
+            <div class="alert alert-danger">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Клиент</label>
+                            {{ form.client }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Сумма</label>
+                            {{ form.amount }}
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-header">Выберите тип актива</div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Ценная бумага</label>
+                                {{ form.security }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Или депозит</label>
+                                {{ form.deposit }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Дата покупки</label>
+                            {{ form.purchase_date }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Дата продажи</label>
+                            {{ form.sale_date }}
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Создать</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const securitySelect = document.getElementById('security-select');
+        const depositSelect = document.getElementById('deposit-select');
+    
+        // При выборе ценной бумаги очищаем депозит
+        securitySelect.addEventListener('change', function() {
+            if (this.value) depositSelect.value = '';
+        });
+    
+        // При выборе депозита очищаем ценную бумагу
+        depositSelect.addEventListener('change', function() {
+            if (this.value) securitySelect.value = '';
+        });
+    });
+    </script>
+{% endblock %}

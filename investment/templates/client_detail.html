@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h3>{{ client.name }}</h3>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Телефон</dt>
+                <dd class="col-sm-9">{{ client.phone }}</dd>
+                
+                <dt class="col-sm-3">Активные инвестиции</dt>
+                <dd class="col-sm-9">
+                    <ul class="list-group">
+                        {% for investment in client.investment_set.all %}
+                        <li class="list-group-item">
+                            {{ investment.security.code }} 
+                            ({{ investment.purchase_date|date:"d.m.Y" }})
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </dd>
+            </dl>
+            <a href="{% url 'client_edit' client.pk %}" class="btn btn-warning">Редактировать</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

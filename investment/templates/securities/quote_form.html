@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-success text-white">
+            <h3>Добавление котировки для {{ security.code }}</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">Котировка</label>
+                            {{ form.quote }}
+                            {{ form.quote.errors }}
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Сохранить
+                </button>
+                <a href="{% url 'security_detail' security.pk %}" class="btn btn-secondary">
+                    Отмена
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

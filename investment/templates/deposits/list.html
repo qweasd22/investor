@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Депозиты</h2>
+    <a href="{% url 'add_deposit' %}" class="btn btn-success mb-3">➕ Новый депозит</a>
+    
+    <div class="row">
+        {% for deposit in deposits %}
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>{{ deposit.client.name }}</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Сумма: {{ deposit.amount }} ₽<br>
+                        Ставка: {{ deposit.interest_rate }}%<br>
+                        <i class="bi bi-calendar"></i>Срок: {{ deposit.start_date|date:"d.m.Y" }} – {{ deposit.end_date|date:"d.m.Y" }}
+                    </p>
+                    <a href="{% url 'deposit_detail' deposit.pk %}" class="btn btn-outline-info">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

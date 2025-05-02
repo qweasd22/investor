@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Список инвестиций</h2>
+    <a href="{% url 'investment_create' %}" class="btn btn-success mb-3">
+        <i class="bi bi-plus-circle"></i> Новая инвестиция
+    </a>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Клиент</th>
+                        <th>Тип</th>
+                        <th>Сумма</th>
+                        <th>Дата покупки</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for investment in investments %}
+                    <tr>
+                        <td>{{ investment.client.name }}</td>
+                        <td>
+                            {% if investment.security %}
+                                {{ investment.security.code }}
+                            {% else %}
+                                Депозит #{{ investment.deposit.id }}
+                            {% endif %}
+                        </td>
+                        <td>{{ investment.amount }} ₽</td>
+                        <td>{{ investment.purchase_date|date:"d.m.Y" }}</td>
+                        <td>
+                            <a href="{% url 'investment_update' investment.pk %}" 
+                               class="btn btn-sm btn-outline-primary">
+                               <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'investment_delete' investment.pk %}" 
+                               class="btn btn-sm btn-outline-danger">
+                               <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

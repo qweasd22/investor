@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-danger text-white">
+            <h3>Удаление клиента</h3>
+        </div>
+        <div class="card-body">
+            <p>Вы уверены, что хотите удалить клиента:</p>
+            <h4>{{ object.name }}</h4>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger mt-3">
+                    <i class="bi bi-trash"></i> Удалить
+                </button>
+                <a href="{% url 'client_list' %}" class="btn btn-secondary mt-3">Отмена</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

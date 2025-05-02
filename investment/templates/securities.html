@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Ценные бумаги</h2>
+    <div class="row">
+        {% for security in securities %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5>{{ security.code }}</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Доходность: {{ security.last_year_yield }}%<br>
+                        Мин. сумма: {{ security.min_amount }} ₽
+                    </p>
+                    <a href="#" class="btn btn-outline-primary">История котировок</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

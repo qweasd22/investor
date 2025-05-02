@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Ценные бумаги</h2>
+    <a href="{% url 'security_create' %}" class="btn btn-success mb-3">
+        <i class="bi bi-plus-circle"></i> Добавить
+    </a>
+
+    <div class="card shadow">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Код</th>
+                    <th>Название</th>
+                    <th>Тип</th>
+                    <th>Рейтинг</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for security in securities %}
+                <tr>
+                    <td>{{ security.code }}</td>
+                    <td>{{ security.name }}</td>
+                    <td>{{ security.get_security_type_display }}</td>
+                    <td>{{ security.rating }}/10</td>
+                    <td>
+                        <a href="{% url 'security_detail' security.pk %}" 
+                           class="btn btn-sm btn-outline-info">
+                           <i class="bi bi-eye"></i>
+                        </a>
+                        <a href="{% url 'security_update' security.pk %}" 
+                           class="btn btn-sm btn-outline-primary">
+                           <i class="bi bi-pencil"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2>{{ security.code }} - {{ security.get_security_type_display }}</h2>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Эмитент</dt>
+                <dd class="col-sm-9">{{ security.issuer }}</dd>
+                
+                <dt class="col-sm-3">Текущая котировка</dt>
+                <dd class="col-sm-9">{{ security.get_current_quote.quote|default:"Нет данных" }} {{ security.currency }}</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h4>История котировок</h4>
+        </div>
+        <div class="card-body">
+            <canvas id="quoteChart" height="100"></canvas>
+            <div class="mt-3">
+                <a href="{% url 'add_quote' security.pk %}" class="btn btn-primary">
+                    Добавить котировку
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

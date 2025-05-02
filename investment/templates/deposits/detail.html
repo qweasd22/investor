@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h3>Депозит №{{ deposit.id }}</h3>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Клиент</dt>
+                <dd class="col-sm-9">{{ deposit.client.name }}</dd>
+                
+                <dt class="col-sm-3">Доходность</dt>
+                <dt class="col-sm-9">{{ deposit.get_profit }}%</dt>
+            </dl>
+            <a href="{% url 'edit_deposit' deposit.pk %}" class="btn btn-warning">Редактировать</a>
+            <a href="{% url 'delete_deposit' deposit.pk %}" class="btn btn-danger">Удалить</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
