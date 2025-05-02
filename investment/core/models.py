@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+
 class Client(models.Model):
     
     
@@ -48,20 +49,34 @@ class Security(models.Model):
         return f"{self.code} ({self.name})"
 
 class QuoteHistory(models.Model):
-    security = models.ForeignKey(Security, on_delete=models.CASCADE, related_name='quotes')
-    quote = models.DecimalField('Котировка', max_digits=10, decimal_places=2)
-    date = models.DateField('Дата', auto_now_add=True)
+    security = models.ForeignKey(
+        'Security', 
+        on_delete=models.CASCADE, 
+        related_name='quotes'
+    )
+    quote = models.DecimalField(
+        max_digits=10, 
+        decimal_places=2
+    )
+    date = models.DateField('Дата')
 
     class Meta:
         ordering = ['-date']
-    def get_change_percentage(self):
-        prev_quote = self.security.quotes.filter(date__lt=self.date).first()
-        if prev_quote:
-            return round(((self.quote - prev_quote.quote)/prev_quote.quote * 100), 2)
-        return None
-    
+        verbose_name = 'История котировок'
+        verbose_name_plural = 'История котировок'
+
     def __str__(self):
         return f"{self.security.code} - {self.quote} ({self.date})"
+    def get_change(self):
+        prev_quote = QuoteHistory.objects.filter(
+            security=self.security,
+            date__lt=self.date
+        ).order_by('-date').first()
+        
+        if prev_quote and prev_quote.quote != 0:
+            change = ((self.quote - prev_quote.quote) / prev_quote.quote) * 100
+            return round(change, 2)
+        return None
 
 from decimal import Decimal
 class Deposit(models.Model):

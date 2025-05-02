@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-info text-white">
+            <h3>История котировок {{ security.code }}</h3>
+        </div>
+        <div class="card-body">
+            <canvas id="quoteChart"></canvas>
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Котировка</th>
+                        <th>Изменение</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for quote in quotes %}
+                    <tr>
+                        <td>{{ quote.date|date:"d.m.Y" }}</td>
+                        <td>{{ quote.quote }}</td>
+                        <td>
+                            {% if not forloop.first %}
+                                {{ quote.get_change }}%
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('quoteChart').getContext('2d');
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['{% for q in quotes %}{{ q.date|date:"d.m.Y" }},{% endfor %}'],
+        datasets: [{
+            label: 'Котировки',
+            data: ['{% for q in quotes %}{{ q.quote }},{% endfor %}'],
+            borderColor: '#4e73df',
+            tension: 0.1
+        }]
+    }
+});
+</script>
+{% endblock %}

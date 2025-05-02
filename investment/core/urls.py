@@ -12,7 +12,8 @@ urlpatterns = [
     path('investments/<int:pk>/edit/', views.InvestmentUpdateView.as_view(), name='investment_update'),
     path('investments/<int:pk>/delete/', views.InvestmentDeleteView.as_view(), name='investment_delete'),
     path('create/', views.InvestmentCreateView.as_view(), name='investment_create'),
-    
+    path('security/<int:pk>/quotes/', views.QuoteListView.as_view(), name='quote_list'),
+    path('security/<int:pk>/quotes/add/', views.QuoteCreateView.as_view(), name='quote_create'),
 
     path('deposits/', views.deposit_list, name='deposit_list'),
     path('deposits/add/', views.create_deposit, name='add_deposit'),

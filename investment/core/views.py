@@ -221,3 +221,25 @@ class QuoteCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('security_detail', kwargs={'pk': self.kwargs['pk']})
+    
+class QuoteCreateView(CreateView):
+    model = QuoteHistory
+    form_class = QuoteForm
+    template_name = 'quotes/quote_form.html'
+
+    def form_valid(self, form):
+        form.instance.security = Security.objects.get(pk=self.kwargs['pk'])
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('security_detail', kwargs={'pk': self.kwargs['pk']})
+
+class QuoteListView(ListView):
+    model = QuoteHistory
+    template_name = 'quotes/quote_list.html'
+    context_object_name = 'quotes'
+
+    def get_queryset(self):
+        return QuoteHistory.objects.filter(
+            security_id=self.kwargs['pk']
+        ).select_related('security')

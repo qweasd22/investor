@@ -23,9 +23,10 @@ class SecurityForm(forms.ModelForm):
 class QuoteForm(forms.ModelForm):
     class Meta:
         model = QuoteHistory
-        fields = ['quote']
+        fields = ['quote', 'date']
         widgets = {
-            'quote': forms.NumberInput(attrs={'step': '0.01'}),
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'quote': forms.NumberInput(attrs={'step': '0.01'})
         }
 from django.utils import timezone
 class InvestmentForm(forms.ModelForm):
