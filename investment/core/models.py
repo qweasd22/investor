@@ -87,7 +87,7 @@ class Deposit(models.Model):
     )
     interest_rate = models.DecimalField(
         'Процентная ставка',
-        max_digits=5, 
+        max_digits=10**3, 
         decimal_places=2
     )
     start_date = models.DateField('Дата начала')

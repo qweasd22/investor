@@ -15,6 +15,9 @@ router.register(r'securities/(?P<security_pk>\d+)/quotes', views.QuoteHistoryVie
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('api-token-auth/', views.CustomAuthToken.as_view(), name='api_token_auth'),
+    path('token/', views.CustomAuthToken.as_view(), name='api_token_auth'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('login/', views.CustomAuthToken.as_view(), name='api_token_auth'),
     path('', include(router.urls)),
     

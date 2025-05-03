@@ -47,7 +47,20 @@ INSTALLED_APPS = [
     'drf_yasg',
     
 ]
-
+CORS_ALLOW_ALL_ORIGINS = True  # Для разработки
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'origin',
+    'user-agent'
+]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:18800",
+    "http://127.0.0.1",
+    "http://ваш-ip-адрес"
+]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
